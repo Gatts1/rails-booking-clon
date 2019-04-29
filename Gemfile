@@ -57,3 +57,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'rspec-rails'
   
 gem 'devise'
+gem 'omniauth-facebook'
+gem 'omniauth-github'
