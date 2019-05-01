@@ -6,7 +6,7 @@ class Api::HotelsController < ApiController
   end
 
   def show
-    render json: @hotel
+    render json: Hotel.find(params[:id])
   end
 
   def create
@@ -22,7 +22,7 @@ class Api::HotelsController < ApiController
     if @hotel.update(hotel_params)
       render json: @hotel, status: :ok
     else
-      render json: { errors: hotel.errors}
+      render json: { errors: @hotel.errors}
     end
   end
 
