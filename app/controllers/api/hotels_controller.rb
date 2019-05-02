@@ -1,10 +1,6 @@
 class Api::HotelsController < ApiController
   before_action :set_hotel, only: [:show, :update, :destroy]
 
-  rescue_from ActiveRecord::RecordNotFound do |e|
-    render json: { message: e.message }, status: :not_found
-  end
-
   def index
     render json: Hotel.all
   end
