@@ -6,7 +6,7 @@ class Api::HotelsController < ApiController
   end
 
   def show
-    render json: Hotel.find(params[:id])
+    render json: @hotel
   end
 
   def create
