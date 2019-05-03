@@ -7,11 +7,11 @@ class Api::BookingPolicy < ApplicationPolicy
   end
 
   def index?
-    user.has_role?('regular') ||  user.has_role?('admin')
+    user.has_role?('regular') || user.has_role?('admin')
   end
 
   def show?
-    booking.user.id == user.id
+    booking.user.id == user.id || user.has_role?('admin')
   end
 
   def create?
@@ -19,10 +19,10 @@ class Api::BookingPolicy < ApplicationPolicy
   end
 
   def update?
-    user.has_role?('regular') && booking.user.id == user.id
+    (user.has_role?('regular') && booking.user.id == user.id) || user.has_role?('admin')
   end
 
   def destroy?
-    user.has_role?('regular') && booking.user.id == user.id
+    (user.has_role?('regular') && booking.user.id == user.id) || user.has_role?('admin')
   end
 end 

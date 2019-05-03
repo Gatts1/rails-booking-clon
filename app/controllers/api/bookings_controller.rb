@@ -6,7 +6,11 @@ class Api::BookingsController < ApiController
     if params[:room_id].present?
       render json: Room.find(params[:room_id]).bookings
     else
-      render json: current_user.bookings
+      if current_user.role == "regular"
+        render json: current_user.bookings
+      else
+        render json: Booking.all
+      end
     end
   end
   
