@@ -8,8 +8,8 @@ class Booking < ApplicationRecord
   end
 
   def notification_booking_created
-    BookingMailer.with(booking: self).booking_created_user.deliver_now
-    BookingMailer.with(booking: self).booking_created_hotel.deliver_now
+    BookingMailer.with(booking: self).booking_created_user.deliver_later
+    BookingMailer.with(booking: self).booking_created_hotel.deliver_later
   end
 
 end
