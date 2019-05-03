@@ -1,8 +1,20 @@
 require 'rails_helper'
 
 describe Api::HotelsController, type: :controller do
-  
+
+  def authorization_header
+    user = User.create(
+      email: "space@gmail.com",
+      name:'space',
+      password:'secret123',
+      role:'admin'
+    )
+    token = JSONWebToken.encode(user_id: user.id)
+    { 'Authorization': "Bearer #{token}" }
+  end
+
   before do
+    request.headers.merge!(authorization_header)
     @hotel = Hotel.create( 
       name: 'Oro Verde',
       email: 'drupvon+hotel1@gmail.com',
@@ -48,7 +60,7 @@ describe Api::HotelsController, type: :controller do
     it 'returns http status created' do
       post :create, params: {
         name: 'Oro Verde',
-        email: 'drupvon+hotel1@gmail.com',
+        email: 'drupvon+hotel2@gmail.com',
         city: 'Tingo Maria',
         country: 'Peru',
         address: 'Jr. Amazonas 440'
@@ -57,10 +69,10 @@ describe Api::HotelsController, type: :controller do
       expect(response).to have_http_status(:created)
     end
 
-    it 'returns the created hotel' do
+    it 'returns the hotel created' do
       post :create, params: {
         name: 'Oro Verde',
-        email: 'drupvon+hotel1@gmail.com',
+        email: 'drupvon+hotel2@gmail.com',
         city: 'Tingo Maria',
         country: 'Peru',
         address: 'Jr. Amazonas 440'
@@ -90,8 +102,8 @@ describe Api::HotelsController, type: :controller do
     end
   end
 
-  describe "DELETE destroy" do
-    it "returns http status no content" do
+  describe 'DELETE destroy' do
+    it 'returns http status no content' do
       delete :destroy, params: { 
         id: @hotel 
       }
