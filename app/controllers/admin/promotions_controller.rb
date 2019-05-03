@@ -1,5 +1,6 @@
 class Admin::PromotionsController < ApplicationController
-  before_action :set_promotion, only: [:index, :new, :show, :edit, :create, :update]
+  before_action :set_hotel, only: [:index, :new, :show, :edit, :create, :update]
+  before_action :set_promotion, only: [:show, :edit, :update]
 
   def index
     @promotions = @hotel.promotions
@@ -12,12 +13,10 @@ class Admin::PromotionsController < ApplicationController
   end
 
   def show
-    @promotion = Promotion.find(params[:id])
     authorize [:admin,  @promotion]
   end
 
   def edit
-    @promotion = Promotion.find(params[:id])
     authorize [:admin,  @promotion]
   end
 
@@ -25,14 +24,13 @@ class Admin::PromotionsController < ApplicationController
     @promotion = @hotel.promotions.new(promotions_params)
     authorize [:admin,  @promotion]
     if @promotion.save
-      redirect_to admin_hotel_path(@hotel), notice: 'Promotion was successfully created.'
+      redirect_to admin_hotel_promotions_path(@hotel), notice: 'Promotion was successfully created.'
     else
       render :new
     end
   end
 
   def update 
-    @promotion = Promotion.find(params[:id])
     authorize [:admin,  @promotion]
     if @promotion.update(promotions_params)
       redirect_to admin_hotel_promotions_path(@hotel), notice: 'Promotion was successfully updated'
@@ -42,7 +40,7 @@ class Admin::PromotionsController < ApplicationController
   end
 
   private
-  def set_promotion
+  def set_hotel
     @hotel = Hotel.find(params[:hotel_id])
   end
 
