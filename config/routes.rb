@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   resources :bookings
   resources :rooms
 
-  get '/book', to: 'rooms#book'
-  post '/book', to: 'rooms#save_book'
+  get '/reserve', to: 'rooms#reserve'
+  post '/reserve', to: 'rooms#reserve_save'
 
   namespace :admin do
     root to: "hotels#index"

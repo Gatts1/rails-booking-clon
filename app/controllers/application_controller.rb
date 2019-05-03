@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     if current_user.has_role?('admin')
       return admin_root_path
     elsif session[:room_id]
-      return book_path(room_id: session[:room_id])
+      return reserve_path(room_id: session[:room_id])
     else
       return root_path
     end

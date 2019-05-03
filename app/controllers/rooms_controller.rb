@@ -5,20 +5,20 @@ class RoomsController < ApplicationController
     @rooms = Room.all
   end
 
-  def book
+  def reserve
     if current_user.nil?
       flash[:alert] = "You need to sign in to reserve this room"
       session[:room_id] = params[:room_id]
       redirect_to "/users/sign_in"
     elsif params[:room_id].present?
       @room = Room.find(params[:room_id])
-      render "book/index"
+      render "reserve/index"
     else
       redirect_to rooms_path
     end
   end
 
-  def save_book
+  def reserve_save
     @room = Room.find(params[:room_id])
     if params[:start_date].present? && params[:end_date].present?
       @bookings = @room.bookings
@@ -33,11 +33,11 @@ class RoomsController < ApplicationController
         redirect_to root_path, notice: 'Room booked was successfully rented.'
       else
         flash[:notice] = 'The room is already booked in dates'
-        render "book/index"
+        render "reserve/index"
       end
     else
       flash[:notice] = 'Start_date and end_date are required'
-      render "book/index"
+      render "reserve/index"
     end
   end
 
