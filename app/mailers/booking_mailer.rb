@@ -16,4 +16,10 @@ class BookingMailer < ApplicationMailer
     @booking = params[:booking]
     mail(to: @booking.room.hotel.email, subject: 'Booking created')
   end
+
+  def reminder_booking_user
+    @booking = params[:booking]
+    mail(to: @booking.user.email, subject: 'Booking Reminder')
+  end
+
 end
