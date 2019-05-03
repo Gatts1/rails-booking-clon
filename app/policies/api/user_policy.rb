@@ -23,6 +23,6 @@ class Api::UserPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.has_role?('admin')
+    current_user.has_role?('admin')
   end
 end 
