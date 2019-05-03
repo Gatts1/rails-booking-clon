@@ -2,7 +2,10 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   root to: "home#index"
   get '/search', to: 'home#search'
+  get '/promotions', to: 'home#promotions'
   
+  resources :bookings 
+
   namespace :admin do
     root to: "hotels#index"
     get "/metrics", to: "hotels#metrics"
