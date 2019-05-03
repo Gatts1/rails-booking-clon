@@ -1,6 +1,6 @@
 class Admin::PromotionsController < ApplicationController
   before_action :set_hotel, only: [:index, :new, :show, :edit, :create, :update]
-  before_action :set_promotion, only: [:show, :edit, :update]
+  before_action :set_promotion, only: [:show, :edit, :update, :destroy]
 
   def index
     @promotions = @hotel.promotions
@@ -39,9 +39,18 @@ class Admin::PromotionsController < ApplicationController
     end
   end
 
+  def destroy
+    @promotion.destroy
+    redirect_to admin_hotel_promotions_path, notice: 'Promotion was successfully destroyed.'
+  end
+
   private
   def set_hotel
     @hotel = Hotel.find(params[:hotel_id])
+  end
+
+  def set_promotion
+    @promotion = Promotion.find(params[:id])
   end
 
   def promotions_params
