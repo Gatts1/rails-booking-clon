@@ -21,5 +21,4 @@ class BookingMailer < ApplicationMailer
     @booking = params[:booking]
     mail(to: @booking.user.email, subject: 'Booking Reminder')
   end
-
 end

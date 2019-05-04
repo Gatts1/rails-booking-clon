@@ -12,7 +12,6 @@ class Booking < ApplicationRecord
     BookingMailer.with(booking: self).booking_created_hotel.deliver_later
   end
 
-
   def reservation_reminder
     SendBookingReminderNotificationJob.set(wait_until: ((self.start_date - 1.day)- DateTime.now).to_s).perform_later(self)
   end
